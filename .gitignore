@@ -1,0 +1,12 @@
+target/
+build/
+*.class
+*.jar
+*.log
+.idea/
+*.iml
+node_modules/
+dist/
+.vite/
+.DS_Store
+db/*.bak

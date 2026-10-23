@@ -1,0 +1,50 @@
+server:
+  port: ${BN_PORT:8090}
+  tomcat:
+    threads:
+      max: 200
+    max-connections: 8192
+
+spring:
+  application:
+    name: bn-platform
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    # 命名实例走 SQL Browser 解析端口，本机没装 Browser 服务，直接写固定端口 1433
+    url: ${DB_URL:jdbc:sqlserver://127.0.0.1:1433;databaseName=bn_monitor;encrypt=true;trustServerCertificate=true;sendStringParametersAsUnicode=true}
+    username: ${DB_USER:bn_app}
+    password: ${DB_PASSWORD:Bn@Monitor2026}
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 5
+      connection-timeout: 5000
+      pool-name: bn-pool
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+  mvc:
+    async:
+      request-timeout: -1
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+
+bn:
+  jwt:
+    secret: bn-platform-2026-10-22-secret-key-change-me
+    expire-hours: 2
+  ingest:
+    queue-capacity: 10000
+    batch-size: 500
+    flush-interval-ms: 50
+
+logging:
+  level:
+    com.bngold: info
